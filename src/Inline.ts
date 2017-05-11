@@ -8,8 +8,12 @@ class Inline extends EditorNode<null> {
   textContent = ''
 
   updateChildList(mutation: MutationRecord): void {
-    for (const node of [].slice.call(mutation.addedNodes)) {
-      // @todo hoist Inline or Block
+    for (const child of [].slice.call(this.domNode.childNodes)) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        // @todo ignore or clone
+      } else {
+        // @todo hoist element
+      }
     }
   }
 
@@ -18,8 +22,23 @@ class Inline extends EditorNode<null> {
   }
 
   updateCharacterData(mutation: MutationRecord): void {
-    // @todo update character data
+    this.textContent = this.domNode.textContent
+    // @todo trigger update
   }
+
+  setContent(content: string): void {
+    this.domNode.textContent = content
+    this.textContent = content
+  }
+
+  insertChild(...args: any[]): void {
+    throw new Error('Cannot insert children into inline node')
+  }
+
+  removeChild(...args: any[]): void {
+    throw new Error('Cannot remove children from inline node')
+  }
+
 }
 
 export default Inline

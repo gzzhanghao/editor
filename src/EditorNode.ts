@@ -30,7 +30,15 @@ abstract class EditorNode<ContentType extends EditorNode<any>> {
     }
   }
 
+  clone(): EditorNode<ContentType> {
+    const Constructor = <new (Editor, Element?) => EditorNode<ContentType>> this.constructor
+    return new Constructor(this.editor, this.domNode.cloneNode(false))
+  }
+
   insertChild(child: ContentType, index: number = this.children.length): void {
+    if (index < 0 || index > this.children.length) {
+      throw new RangeError('Invalid index for the child to insert')
+    }
     if (child.parent) {
       child.parent.removeChild(child)
     }
@@ -44,12 +52,22 @@ abstract class EditorNode<ContentType extends EditorNode<any>> {
     }
   }
 
+  insertBefore(child: ContentType, refChild: ContentType): void {
+    this.insertChild(child, this.children.indexOf(refChild))
+  }
+
+  insertAfter(child: ContentType, refChild: ContentType): void {
+    this.insertChild(child, this.children.indexOf(refChild) + 1)
+  }
+
   removeChild(child: ContentType): void {
     const index = this.children.indexOf(child)
-    if (index >= 0) {
-      this.domNode.removeChild(this.children[index].domNode)
-      this.children.splice(index, 1)
+    if (index < 0) {
+      throw new Error('The node to remove is not a child of this node')
     }
+    child.parent = null
+    this.domNode.removeChild(this.children[index].domNode)
+    this.children.splice(index, 1)
   }
 
   statics(): any {

@@ -1,26 +1,7 @@
-import EditorNode from './EditorNode'
-import Inline from './Inline'
-import Break from './Break'
+import Parent from './Parent'
 
-class Block extends EditorNode<Inline> {
+abstract class Block extends Parent {
 
-  static tagName = 'p'
-
-  static defaultChild = Break
-
-  updateChildList(mutation: MutationRecord): void {
-    for (const node of [].slice.call(mutation.addedNodes)) {
-      // @todo add Inline or hoist Block
-    }
-    for (const node of [].slice.call(mutation.removedNodes)) {
-      const instance = this.editor.getEditorNode(node)
-      // @todo remove Inline
-    }
-  }
-
-  updateAttributes(mutation: MutationRecord): void {
-    // @todo update Block attribute
-  }
 }
 
 export default Block

@@ -1,25 +1,11 @@
-import EditorNode from './EditorNode'
 import TableRow from './TableRow'
+import Block from './Block'
 
-class Table extends EditorNode<TableRow> {
+class Table extends Block {
 
   static tagName = 'table'
 
   static defaultChild = TableRow
-
-  updateChildList(mutation: MutationRecord): void {
-    for (const node of [].slice.call(mutation.addedNodes)) {
-      // @todo add TableRow
-    }
-    for (const node of [].slice.call(mutation.removedNodes)) {
-      const instance = this.editor.getEditorNode(node)
-      // @todo remove TableRow
-    }
-  }
-
-  updateAttributes(mutation: MutationRecord): void {
-    // @todo update Table attribute
-  }
 }
 
 export default Table

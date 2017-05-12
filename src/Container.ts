@@ -1,20 +1,11 @@
-import EditorNode from './EditorNode'
-import Block from './Block'
-import Table from './Table'
+import Parent from './Parent'
+import Paragraph from './Paragraph'
 
-class Container extends EditorNode<Block | Table> {
+class Container extends Parent {
 
-  static defaultChild = Block
+  static tagName = 'div'
 
-  updateChildList(mutation: MutationRecord): void {
-    for (const node of [].slice.call(mutation.addedNodes)) {
-      // @todo add Block
-    }
-    for (const node of [].slice.call(mutation.removedNodes)) {
-      const instance = this.editor.getEditorNode(node)
-      // @todo remove Block
-    }
-  }
+  static defaultChild = Paragraph
 }
 
 export default Container

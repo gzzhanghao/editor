@@ -1,7 +1,5 @@
 import Container from './Container'
-import EditorNode from './EditorNode'
-
-const DOM_KEY_PREFIX = '__Editor__'
+import Item from './Item'
 
 const OBSERVER_CONFIG = {
   attributes: true,
@@ -10,25 +8,15 @@ const OBSERVER_CONFIG = {
   subtree: true,
 }
 
-const MUTATION_METHODS = {
-  'childList': 'updateChildList',
-  'attributes': 'updateAttributes',
-  'characterData': 'updateCharacterData',
-}
-
 export default class Editor {
 
-  static editorId = 0
-
-  domKey = DOM_KEY_PREFIX + Editor.editorId++
-
-  container: Container
+  readonly container = new Container
 
   observer: MutationObserver
 
-  constructor(public domNode: Element) {
+  constructor(public domNode: HTMLElement) {
     // initialize children
-    this.container = new Container(this, domNode)
+    domNode.appendChild(this.container.domNode)
     domNode.setAttribute('contentEditable', 'true')
 
     // observe mutations in container
@@ -44,18 +32,10 @@ export default class Editor {
       if (target.nodeType === Node.TEXT_NODE) {
         target = target.parentNode
       }
-      const instance = this.getEditorNode(target)
+      const instance = Item.of(target)
       if (instance) {
-        instance[MUTATION_METHODS[mutation.type]](mutation)
+        instance.update(mutation)
       }
     }
-  }
-
-  getEditorNode(node: Node): EditorNode<any> {
-    return node[this.domKey]
-  }
-
-  setEditorNode(node: Node, editorNode: EditorNode<any>): void {
-    node[this.domKey] = editorNode
   }
 }

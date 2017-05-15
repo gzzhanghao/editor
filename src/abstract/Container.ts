@@ -1,5 +1,5 @@
 import Parent from './Parent'
-import Paragraph from './Paragraph'
+import Paragraph from '../item/Section'
 
 class Container extends Parent {
 

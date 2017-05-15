@@ -1,5 +1,5 @@
-import Container from './Container'
-import Item from './Item'
+import Container from './abstract/Container'
+import Item from './abstract/Item'
 
 const OBSERVER_CONFIG = {
   attributes: true,

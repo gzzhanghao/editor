@@ -1,4 +1,5 @@
-import Inline from './Inline'
+import Inline from '../abstract/Inline'
+import Item from '../abstract/Item'
 
 class Text extends Inline {
 
@@ -22,6 +23,12 @@ class Text extends Inline {
         break
       }
     }
+  }
+}
+
+export function parse(node: Node): Array<Item> {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return [new Text({ content: node.textContent })]
   }
 }
 

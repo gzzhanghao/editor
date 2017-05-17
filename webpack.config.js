@@ -15,17 +15,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.jsx?$/,
         include: [
           path.resolve('src'),
         ],
-        loader: 'ts-loader',
+        loader: 'babel-loader',
       },
     ],
   },
 
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js', '.jsx'],
   },
 
   devtool: 'source-map',

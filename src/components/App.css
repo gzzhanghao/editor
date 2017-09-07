@@ -1,0 +1,21 @@
+:global(html),
+:global(body),
+:global(#editor) {
+  margin: 0;
+  height: 100%;
+}
+
+.container,
+.editor {
+  height: 100%;
+}
+
+.trap {
+  position: fixed;
+  width: 100%;
+  outline: none;
+}
+
+.editor {
+  overflow: hidden;
+}
